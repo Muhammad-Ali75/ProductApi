@@ -1,15 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../model/product");
+const paginatedResults = require("../middleware/pagination");
 
 //Get all Method
-router.get("/getAllProducts", async (req, res) => {
-  try {
-    const allProducts = await Product.find();
-    res.json(allProducts);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+router.get("/getAllProducts", paginatedResults(Product), async (req, res) => {
+  res.json(res.paginatedResults);
 });
 
 //Get by ID Method
