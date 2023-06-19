@@ -3,21 +3,10 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const products = require("./routes/product");
-const mongoose = require("mongoose");
-const product = require("./model/product");
-const mongoString = process.env.DATABASE_URL;
-console.log(mongoString);
+const configureDatabase = require("./middleware/dbconnect")
 
-mongoose.connect(mongoString);
-const database = mongoose.connection;
+configureDatabase();
 
-database.on("error", (error) => {
-  console.log(error);
-});
-
-database.once("connected", () => {
-  console.log("Database Connected");
-});
 const app = express();
 
 app.use(express.json());
