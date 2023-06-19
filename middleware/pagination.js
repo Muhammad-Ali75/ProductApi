@@ -26,6 +26,7 @@ function paginatedResults(model) {
     try {
       const totalCount = await model.countDocuments();
       results.all_products = totalCount;
+      results.limit = limit;
       results.products = await model
         .find()
         .limit(limit)
