@@ -2,7 +2,7 @@ function paginatedResults(model) {
   // middleware function
   return async (req, res, next) => {
     const page = parseInt(req.query.page);
-    const limit = parseInt(req.query.limit);
+    const limit = 3;
 
     // calculating the starting and ending index
     const startIndex = (page - 1) * limit;
@@ -24,7 +24,13 @@ function paginatedResults(model) {
     }
 
     try {
-      results.results = await model.find().limit(limit).skip(startIndex).exec();
+      const totalCount = await model.countDocuments();
+      results.all_products = totalCount;
+      results.products = await model
+        .find()
+        .limit(limit)
+        .skip(startIndex)
+        .exec();
       res.paginatedResults = results;
       next();
     } catch (e) {
