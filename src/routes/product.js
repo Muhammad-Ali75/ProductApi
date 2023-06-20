@@ -8,10 +8,13 @@ router.get("/getAllProducts", async (req, res) => {
   const page = +req.query.page || 1;
   const limit = +req.query.limit || 5;
   const sort = req.query.sort || "";
+  const keyword = req.query.keyword;
   const query = req.query.query;
-  console.log(query);
-
   const pagination = limit != -1;
+  let searchquery;
+  if (keyword) {
+    searchquery = { title: { $regex: keyword, $options: "i" } };
+  }
 
   const options = {
     page,
@@ -19,9 +22,17 @@ router.get("/getAllProducts", async (req, res) => {
     pagination,
     sort,
   };
-  const results = await Product.paginate(JSON.parse(query || "{}"), options);
 
-  return res.send({ ...results });
+  try {
+    const results = await Product.paginate(
+      searchquery || JSON.parse(query || "{}"),
+      options
+    );
+    return res.send({ ...results });
+  } catch (error) {
+    console.error("Error parsing query:", error.message);
+    return res.status(400).json({ error: "Invalid query" });
+  }
 });
 
 //Get by ID Method
