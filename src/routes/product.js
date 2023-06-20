@@ -19,11 +19,8 @@ router.get("/getAllProducts", async (req, res) => {
     pagination,
     select,
     sort,
-  }
-  const results = await Product.paginate(
-    JSON.parse(query || "{}"),
-    options
-  );
+  };
+  const results = await Product.paginate(JSON.parse(query || "{}"), options);
 
   return res.send({ ...results });
 });
