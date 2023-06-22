@@ -52,6 +52,7 @@ router.post("/product", async (req, res) => {
     supplier_certificate,
     country,
     stock_in_usa,
+    rating,
   } = req.body;
 
   // Create a new product object using the provided data
@@ -66,6 +67,7 @@ router.post("/product", async (req, res) => {
     supplier_certificate,
     country,
     stock_in_usa,
+    rating,
   });
 
   // Save the new product to the database
