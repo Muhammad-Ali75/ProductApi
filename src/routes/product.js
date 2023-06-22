@@ -3,6 +3,9 @@ const router = express.Router();
 const Product = require("../model/product");
 // const paginatedResults = require("../middleware/pagination");
 
+router.get("/", (req, res) => {
+  res.send("Product Api");
+});
 //Get all Method
 router.get("/getAllProducts", async (req, res) => {
   const page = +req.query.page || 1;
