@@ -14,6 +14,7 @@ async function getAll(req, res) {
     limit,
     pagination,
     sort,
+    populate: "ratings",
   };
 
   try {
