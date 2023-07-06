@@ -2,11 +2,7 @@ const Product = require("../model/product");
 
 //Method to get all posts from db
 async function getAll(req, res) {
-  const page = +req.query.page || 1;
-  const limit = +req.query.limit || 5;
-  const sort = req.query.sort || "";
-  const keyword = req.query.keyword;
-  const query = req.query.query;
+  const { page = 1, limit = 5, sort = "", keyword, query } = req.query;
   const pagination = limit != -1;
   let searchquery;
   if (keyword) {
