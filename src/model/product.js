@@ -32,10 +32,4 @@ const productSchema = new mongoose.Schema(
 
 productSchema.plugin(mongoosePaginate);
 
-productSchema.virtual("avgRating").get(function () {
-  const some = this.populate("ratings");
-  console.log("VIrtural", some);
-  return 0;
-});
-
 module.exports = mongoose.model("product", productSchema);
