@@ -27,8 +27,13 @@ ratingSchema.pre("validate", async function () {
 
 ratingSchema.post("save", async function (doc) {
   const Product = require("./product");
-  const product = await Product.findById(doc.product);
+  const product = await Product.findById(doc.product).populate("ratings");
   product.ratings.push(doc);
+  const length = product.ratings.length;
+  const sum = product.ratings.reduce((acc, rating) => {
+    return (acc += rating.rating);
+  }, 0);
+  product.rating = sum / length;
   await product.save();
 });
 
